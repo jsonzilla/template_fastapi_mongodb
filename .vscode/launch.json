@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run server",
+      "type": "python",
+      "request": "launch",
+      "program": "./main.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "PyTest",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      //USE IF NEEDED "python": "${command:python.interpreterPath}",
+      "module": "pytest",
+      "args": [
+          "-sv"
+      ],
+      "cwd": "${workspaceRoot}",
+      "env": {},
+      "envFile": "${workspaceRoot}/.env",
+      "debugOptions": [
+          "WaitOnAbnormalExit",
+          "WaitOnNormalExit",
+          "RedirectOutput"
+      ]
+    }
+  ]
+}

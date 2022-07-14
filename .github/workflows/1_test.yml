@@ -1,0 +1,13 @@
+name: Test Only
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  test-and-quality:
+    uses: ./.github/workflows/commom-test-and-quality.yml
