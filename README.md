@@ -1,7 +1,5 @@
 # Template project FastAPI with MongoDB
 
-This project was generated via [manage-fastapi](https://ycd.github.io/manage-fastapi/)! :tada:
-
 ## Install the requirements:
 A mongo database is required to run the server.
 Get one from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), for free.
