@@ -1,7 +1,7 @@
 from app.storages.database_filter import format_to_database_filter
 from fastapi import APIRouter, Depends, Body
-from typing import List
-from app.storages.database_storage import Database, get_db
+from typing import List, Optional
+from app.storages.database_storage import Database, Session, get_db, get_db_session
 from app.models.person_model import PersonModel, PersonUpdateModel, filter_to_nested_model, PersonFilterModel
 from app.repositories.person_repository import PersonRepository
 from app.routes import BasicRoutable
@@ -19,7 +19,7 @@ _FILTER = PersonFilterModel
 
 
 @router.get("/", response_description=f"List all {_SHOW_NAME}s", response_model=List[_UPDATE_MODEL])
-async def list(filter: _FILTER = Depends(_FILTER), db: Database =Depends(get_db)):
+async def list(filter: _FILTER = Depends(_FILTER), db: Database = Depends(get_db), session: Optional[Session] = Depends(get_db_session)):
     nested = filter_to_nested_model(filter)
     db_filter = format_to_database_filter(nested.dict())
     return await _ROUTER.get_all_by(db_filter, db)

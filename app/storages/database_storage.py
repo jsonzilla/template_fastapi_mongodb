@@ -1,18 +1,28 @@
-import motor.motor_asyncio
+from typing import Optional
 import certifi
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession, AsyncIOMotorDatabase
 from app.core.config import settings
 
 
-Database = motor.motor_asyncio.AsyncIOMotorDatabase
+Client = AsyncIOMotorClient
+Session = AsyncIOMotorClientSession
+Database = AsyncIOMotorDatabase
+
 
 db_client: AsyncIOMotorClient = None
 ca = certifi.where()
 
 
-async def get_db_client() -> AsyncIOMotorClient:
+async def get_db_client() -> Client:
     """Return database client instance."""
     return db_client
+
+
+async def get_db_session() -> Optional[Session]:
+    """Return database session instance."""
+    if db_client is None:
+        await connect_db()
+    return db_client.start_session()
 
 
 async def connect_db():

@@ -9,10 +9,10 @@ _BASE_PATH = '/v1/person/'
 
 
 @pytest_asyncio.fixture
-async def id(db) -> AsyncGenerator:
+async def id(db, session) -> AsyncGenerator:
     repo = PersonRepository()
     valid_json['_id'] = objectid.ObjectId().__str__()
-    insert_id = await repo.insert(valid_json, db)
+    insert_id = await repo.insert(valid_json, db, session)
     yield insert_id
     await db[repo.collection].drop()
 
