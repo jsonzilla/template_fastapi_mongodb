@@ -74,8 +74,6 @@ class BasicRoutable(object):
         if update_ok:
             if (updated := await self.repo.get_by_id(element_id, db)) is not None:
                 return updated
-        if (existing := await self.repo.get_by_id(element_id, db)) is not None:
-            return existing
         raise HTTPException(status_code=404, detail=f"{self.element_name} {element_id} not found")
 
     async def patch_list(self, elements: list, db: Database):
