@@ -3,7 +3,7 @@ fastapi-login
 fastapi-users
 fastapi-health
 asyncio
-uvicorn[standard]==0.18.2
+uvicorn[standard]==0.18.3
 gunicorn==20.1.0
 
 #for database
