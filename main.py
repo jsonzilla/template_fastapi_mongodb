@@ -1,11 +1,10 @@
 import asyncio
-from asyncio import SelectorEventLoop
 from uvicorn import Config, Server
 
 
 class ProactorServer(Server):
     def run(self, sockets=None):
-        loop = SelectorEventLoop()
+        loop = asyncio.SelectorEventLoop()
         asyncio.set_event_loop(loop)
         asyncio.run(self.serve(sockets=sockets))
 
