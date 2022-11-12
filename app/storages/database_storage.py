@@ -1,9 +1,9 @@
 import certifi
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from app.core.config import settings
 
 
-Database = motor.motor_asyncio.AsyncIOMotorDatabase
+Database = AsyncIOMotorDatabase
 
 db_client: AsyncIOMotorClient = None
 ca = certifi.where()
