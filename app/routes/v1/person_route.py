@@ -4,7 +4,7 @@ from typing import List
 from app.storages.database_storage import Database, get_db
 from app.models.person_model import PersonModel, PersonUpdateModel, filter_to_nested_model, PersonFilterModel
 from app.repositories.person_repository import PersonRepository
-from app.routes import BasicRoutable
+from app.routes import BasicRouter
 
 _SHOW_NAME = "person"
 router = APIRouter(
@@ -12,7 +12,7 @@ router = APIRouter(
     tags=[_SHOW_NAME],
     responses={404: {"description": "Not found"}}
 )
-_ROUTER = BasicRoutable(PersonRepository(), _SHOW_NAME)
+_ROUTER = BasicRouter(PersonRepository(), _SHOW_NAME)
 _MODEL = PersonModel
 _UPDATE_MODEL = PersonUpdateModel
 _FILTER = PersonFilterModel

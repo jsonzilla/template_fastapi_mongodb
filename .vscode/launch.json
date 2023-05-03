@@ -2,12 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run server",
+      "name": "Python: Module",
       "type": "python",
       "request": "launch",
-      "program": "./main.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--reload"
+      ]
     },
     {
       "name": "PyTest",
@@ -17,15 +19,15 @@
       //USE IF NEEDED "python": "${command:python.interpreterPath}",
       "module": "pytest",
       "args": [
-          "-sv"
+        "-sv"
       ],
       "cwd": "${workspaceRoot}",
       "env": {},
       "envFile": "${workspaceRoot}/.env",
       "debugOptions": [
-          "WaitOnAbnormalExit",
-          "WaitOnNormalExit",
-          "RedirectOutput"
+        "WaitOnAbnormalExit",
+        "WaitOnNormalExit",
+        "RedirectOutput"
       ]
     }
   ]

@@ -2,9 +2,10 @@ fastapi
 fastapi-login
 fastapi-users
 fastapi-health
+fastapi-utils
 asyncio
-uvicorn[standard]==0.22.0
-gunicorn==20.1.0
+uvicorn[standard]
+gunicorn
 httpx
 
 #for database
@@ -17,6 +18,7 @@ python-dotenv
 
 #for email validation
 pydantic
+pydantic[email]
 
 #security
 bcrypt
@@ -28,5 +30,3 @@ requests
 pytest-asyncio
 pytest-cov
 
-# nested filter
-flatdict

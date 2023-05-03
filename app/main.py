@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.gzip import GZipMiddleware
 from app.routes import base_route
+from app.routes.v1.admin import user_route
 from app.routes.v1.person_route import router
 from app.core.config import settings
+from app.core.security import get_token_header
 from app.storages.database_storage import close_db, connect_db
 
 
@@ -12,8 +14,14 @@ def get_application():
         title=settings.PROJECT_NAME,
         version=settings.PROJECT_VERSION,
         description=settings.PROJECT_DESCRIPTION,
-        debug=False
+        debug=False,
+        swagger_ui_parameters={
+            "defaultModelsExpandDepth": -1,
+            "tagsSorter": "alpha",
+        },
     )
+    if (settings.ENABLE_ADMIN):
+        _app.include_router(user_route.router, dependencies=[Depends(get_token_header)])
     _app.include_router(base_route.router)
     _app.include_router(router)
     return _app

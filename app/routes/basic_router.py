@@ -5,7 +5,7 @@ from app.repositories.base_repository import BaseRepository
 from app.storages.database_storage import Database
 
 
-class BasicRoutable(object):
+class BasicRouter(object):
     def __init__(self, repo, element_name: str = "element"):
         self.repo: BaseRepository = repo
         self.element_name: str = element_name
@@ -15,9 +15,11 @@ class BasicRoutable(object):
         element = jsonable_encoder(element)
         return await self.repo.create(element, db)
 
-    async def post(self, element: BaseModel, db: Database):
+    async def post(self, element, db: Database):
         """ Create a new element return a json response with the created element """
         element = jsonable_encoder(element)
+        if (existing := await self.repo.get_by_id(element["_id"], db)) is not None:
+            return existing
         return await self.repo.create(element, db)
 
     async def create_list(self, elements: list, db: Database):
@@ -29,6 +31,17 @@ class BasicRoutable(object):
         """ Create a new elements return a list of json response with the created elements """
         elements = jsonable_encoder(elements)
         return await self.repo.create_many(elements, db)
+
+    async def put(self, id, element, db):
+        element = {k: v for k, v in element.dict().items() if v is not None}
+        if len(element) >= 1:
+            update_result = await self.repo.update(id, element, db)
+            if update_result.modified_count == 1:
+                if (updated := await self.repo.get_by_id(id, db)) is not None:
+                    return updated
+        if (existing := await self.repo.get_by_id(id, db)) is not None:
+            return existing
+        raise HTTPException(status_code=404, detail=f"{self.element_name} {id} not found")
 
     async def get_all(self, db: Database):
         """ Get all elements """

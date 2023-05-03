@@ -8,6 +8,8 @@ class Settings(BaseSettings):
 
     MONGO_URL: str = Field(env="MONGO_URL", default="mongodb://localhost:27017/", description="The url of the MongoDB")
     DEFAULT_DATABASE: str = Field(env="DEFAULT_DATABASE", default="your_database", description="Default database name")
+    ENABLE_ADMIN: bool = Field(env="ENABLE_ADMIN", default=True)
+    API_TOKEN: str = Field(env="API_TOKEN", default="your_token", description="The token for the API")
 
     class Config:
         validate_assignment = True

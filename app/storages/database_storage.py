@@ -5,11 +5,11 @@ from app.core.config import settings
 
 Database = AsyncIOMotorDatabase
 
-db_client: AsyncIOMotorClient = None
+db_client = None
 ca = certifi.where()
 
 
-async def get_db_client() -> AsyncIOMotorClient:
+async def get_db_client():
     """Return database client instance."""
     return db_client
 

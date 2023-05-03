@@ -1,6 +1,27 @@
 {
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--max-line-length=120",
+    "--ignore=E501",
+    "--exclude=*.env,*.env_example"
+  ],
+  "editor.formatOnSave": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.formatting.provider": "none",
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.git": true,
+  },
+  "search.exclude": {
+    "**/*.pyc": true,
+    "**/.git": true,
+  },
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
-  },
-  "python.formatting.provider": "none"
+  }
 }
