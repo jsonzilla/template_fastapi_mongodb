@@ -30,3 +30,5 @@ requests
 pytest-asyncio
 pytest-cov
 
+# nested filter
+flatdict
