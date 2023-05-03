@@ -1,5 +1,4 @@
 from fastapi import HTTPException
-from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from app.repositories.base_repository import BaseRepository
@@ -19,8 +18,7 @@ class BasicRoutable(object):
     async def post(self, element: BaseModel, db: Database):
         """ Create a new element return a json response with the created element """
         element = jsonable_encoder(element)
-        created = await self.repo.create(element, db)
-        return JSONResponse(status_code=201, content=created)
+        return await self.repo.create(element, db)
 
     async def create_list(self, elements: list, db: Database):
         """ Create a new elements return a list of created elements """
@@ -30,8 +28,7 @@ class BasicRoutable(object):
     async def post_list(self, elements: list, db: Database):
         """ Create a new elements return a list of json response with the created elements """
         elements = jsonable_encoder(elements)
-        created = await self.repo.create_many(elements, db)
-        return JSONResponse(status_code=201, content=created)
+        return await self.repo.create_many(elements, db)
 
     async def get_all(self, db: Database):
         """ Get all elements """
@@ -50,9 +47,8 @@ class BasicRoutable(object):
     async def delete(self, element_id: str, db: Database):
         """ Delete an element """
         delete_result = await self.repo.delete(element_id, db)
-        if delete_result.deleted_count == 1:
-            return JSONResponse(status_code=202, content="deleted")
-        raise HTTPException(status_code=404, detail=f"{self.element_name} {element_id} not found")
+        if delete_result.deleted_count != 1:
+            raise HTTPException(status_code=404, detail=f"{self.element_name} {element_id} not found")
 
     async def exists(self, filter: dict, db: Database) -> bool:
         """ Check if an element exists """

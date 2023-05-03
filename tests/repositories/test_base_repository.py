@@ -19,7 +19,7 @@ valid_json = {'Diana': '1', 'name': 'test'}
 
 @pytest_asyncio.fixture
 async def id(db) -> AsyncGenerator:
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     insert_id = await repo.insert(valid_json, db)
     yield insert_id
     await db[repo.collection].drop()
@@ -28,27 +28,27 @@ async def id(db) -> AsyncGenerator:
 def generate_valid_json_list(n_items):
     xs = [{'Diana': '1', 'name': 'test'} for i in range(n_items)]
     for x in xs:
-        x['_id'] = objectid.ObjectId().__str__() # type: ignore
+        x['_id'] = objectid.ObjectId().__str__()  # type: ignore
     return xs
 
 
 async def test_create(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     assert valid_json == obj
 
 
 async def test_insert(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     id = await repo.insert(valid_json, db)
     assert id == (await repo.get_by_id(id, db))['_id']
 
 
 async def test_insert_many(db):
     a = valid_json.copy()
-    a['_id'] = objectid.ObjectId().__str__() # type: ignore
+    a['_id'] = objectid.ObjectId().__str__()  # type: ignore
     b = valid_json.copy()
-    b['_id'] = objectid.ObjectId().__str__() # type: ignore
+    b['_id'] = objectid.ObjectId().__str__()  # type: ignore
     id = await repo.insert_many([a, b], db)
     assert len(id) == 2
     assert id[0] == (await repo.get_by_id(id[0], db))['_id']
@@ -56,46 +56,46 @@ async def test_insert_many(db):
 
 
 async def test_get_by_id(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     id = await repo.insert(valid_json, db)
     assert id == (await repo.get_by_id(id, db))['_id']
 
 
 async def test_get_one(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     id = await repo.insert(valid_json, db)
     assert id == (await repo.get_one({'_id': id}, db))['_id']
 
 
 async def test_get_by_with_id(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     id = await repo.insert(valid_json, db)
     assert id == (await repo.get_by({'_id': id}, db))[0]['_id']
 
 
 async def test_get_by_with_name(db):
     await db[repo.collection].drop()
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     assert obj == (await repo.get_by({'name': valid_json['name']}, db))[0]
 
 
 async def test_get_by_and_sort(db):
     await db[repo.collection].drop()
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     assert obj == (await repo.get_by_and_sort({'name': valid_json['name']}, 'name', db))[0]
 
 
 async def test_get_all(db):
     await db[repo.collection].drop()
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     assert obj == (await repo.get_all(db))[0]
 
 
 async def test_update(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     obj['name'] = 'test2'
     await repo.update(obj['_id'], obj, db)
@@ -115,7 +115,7 @@ async def test_update_list(db):
 
 
 async def test_delete(db):
-    valid_json['_id'] = objectid.ObjectId().__str__() # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
     obj = await repo.create(valid_json, db)
     await repo.delete(obj['_id'], db)
     assert (await repo.get_by_id(obj['_id'], db)) is None
