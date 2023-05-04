@@ -96,7 +96,7 @@ async def test_get_all(db):
 
 async def test_update(db):
     valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
-    obj: dict = await repo.create(valid_json, db)
+    obj = await repo.create(valid_json, db)
     obj['name'] = 'test2'
     await repo.update(obj['_id'], obj, db)
     assert obj == (await repo.get_by_id(obj['_id'], db))
@@ -115,7 +115,7 @@ async def test_update_list(db):
 
 
 async def test_delete(db):
-    valid_json['_id'] = objectid.ObjectId().__str__()  # type: ignore
+    valid_json['_id'] = objectid.ObjectId().__str__()
     obj = await repo.create(valid_json, db)
     await repo.delete(obj['_id'], db)
     assert (await repo.get_by_id(obj['_id'], db)) is None
