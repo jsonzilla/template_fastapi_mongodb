@@ -71,5 +71,6 @@ def filter_to_nested_model(update_model: PersonFilterModel) -> PersonUpdateModel
         name=update_model.name,
         age=update_model.age,
         occupation=update_model.occupation,
-        hobbies=hobbies
-    )  # type: ignore
+        hobbies=hobbies,
+        friends=[],
+    )

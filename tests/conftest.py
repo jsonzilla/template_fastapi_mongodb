@@ -47,7 +47,7 @@ def db() -> Generator[Database, Any, None]:
     Create a new MongoDB mock database.
     """
     client = AsyncMongoMockClient()
-    return client.test_base
+    yield client.test_base
 
 
 @pytest_asyncio.fixture
